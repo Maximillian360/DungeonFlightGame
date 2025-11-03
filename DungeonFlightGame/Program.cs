@@ -13,12 +13,7 @@
             int userHealth = 90;
             int baseCell = 2;
             bool gameRunning = true;
-            //bool inputValid = false;
             MapGenerator(baseCell, userHealth, worldMap, userXPosition, userYPosition);
-            int newXPosition = userXPosition;
-            int newYPosition = userYPosition;
-            int oldXPosition = userXPosition;
-            int oldYPosition = userYPosition;
             while (gameRunning)
             {
                 Console.WriteLine("Old Map:");
@@ -35,7 +30,7 @@
 
                 else if (userHealth > 0)
                 {
-                    updateMap(baseCell, ref userHealth, ref worldMap, ref newYPosition, ref newXPosition, ref oldXPosition, ref oldYPosition, 
+                    updateMap(baseCell, ref userHealth, ref worldMap, 
                               ref userYPosition, ref userXPosition, ref worldMapRows, ref worldMapCols, playerInput);
                 }
 
@@ -46,20 +41,9 @@
                 }
 
             }
-
-            // while(gameRunning)
-            // {
-            // Console.WriteLine("Enter Input:");
-            // userInput = Console.ReadLine().ToLower();
-            // Movement(userInput, userXPosition, userYPosition);
-            //Console.WriteLine("New Map:");
-            //ViewMap(worldMap);
-
-
-
-            // }
         }
 
+        //TODO: Refactor the player input choices to enums
         static string takePlayerInput()
         {
             while (true)
@@ -81,29 +65,26 @@
             
         }
 
-        static void updateMap(int baseCell, ref int userHealth, ref int[,] worldMap, ref int newYPosition, ref int newXPosition, 
-                              ref int oldXPosition, ref int oldYPosition, ref int userYPosition, ref int userXPosition, ref int worldMapRows,
-                              ref int worldMapCols, string playerInput)
+        //TODO: Remove redundant code in the nested conditionals
+        static void updateMap(int baseCell, ref int userHealth, ref int[,] worldMap,
+                              ref int userYPosition, ref int userXPosition, 
+                              ref int worldMapRows, ref int worldMapCols, 
+                              string playerInput)
         {
-            int checkNewXPos = newXPosition;
-            int checkNewYPos = newYPosition;
+            Console.Clear();
+            int checkNewXPos = userXPosition;
+            int checkNewYPos = userYPosition;
+
             Console.WriteLine("");
             if (playerInput == "s")
             {
                 checkNewYPos += 1;
                 if (validateNewPosition(worldMap, baseCell, userHealth, checkNewYPos, checkNewXPos, worldMapRows, worldMapCols))
                 {
-                    //userYPosition = checkNewYPos;
-                    //userHealth -= worldMap[checkNewYPos, checkNewXPos];
-                    //worldMap[userYPosition, userXPosition] = userHealth;
-                    //worldMap[userYPosition - 1, userXPosition] = 0;
-
-                    newYPosition = checkNewYPos;
-                    userYPosition = newYPosition;
+                    userYPosition = checkNewYPos;
                     userHealth -= worldMap[checkNewYPos, checkNewXPos];
                     worldMap[userYPosition, userXPosition] = userHealth;
-                    oldYPosition = newYPosition - 1;
-                    worldMap[oldYPosition, userXPosition] = 0;
+                    worldMap[userYPosition - 1, userXPosition] = 0;
                 }
                 else
                 {
@@ -116,12 +97,11 @@
                 checkNewYPos -= 1;
                 if (validateNewPosition(worldMap, baseCell, userHealth, checkNewYPos, checkNewXPos, worldMapRows, worldMapCols))
                 {
-                    newYPosition = checkNewYPos;
-                    userYPosition = newYPosition;
+
+                    userYPosition = checkNewYPos;
                     userHealth -= worldMap[checkNewYPos, checkNewXPos];
                     worldMap[userYPosition, userXPosition] = userHealth;
-                    oldYPosition = newYPosition + 1;
-                    worldMap[oldYPosition, userXPosition] = 0;
+                    worldMap[userYPosition + 1, userXPosition] = 0;
                 }
                 else
                 {
@@ -134,12 +114,11 @@
                 checkNewXPos += 1;
                 if (validateNewPosition(worldMap, baseCell, userHealth, checkNewYPos, checkNewXPos, worldMapRows, worldMapCols))
                 {
-                    newXPosition = checkNewXPos;
-                    userXPosition = newXPosition;
+
+                    userXPosition = checkNewXPos;
                     userHealth -= worldMap[checkNewYPos, checkNewXPos];
                     worldMap[userYPosition, userXPosition] = userHealth;
-                    oldXPosition = newXPosition - 1;
-                    worldMap[userYPosition, oldXPosition] = 0;
+                    worldMap[userYPosition, userXPosition - 1] = 0;
                 }
                 else
                 {
@@ -152,12 +131,11 @@
                 checkNewXPos -= 1;
                 if (validateNewPosition(worldMap, baseCell, userHealth, checkNewYPos, checkNewXPos, worldMapRows, worldMapCols))
                 {
-                    newXPosition = checkNewXPos;
-                    userXPosition = newXPosition;
+
+                    userXPosition = checkNewXPos;
                     userHealth -= worldMap[checkNewYPos, checkNewXPos];
                     worldMap[userYPosition, userXPosition] = userHealth;
-                    oldXPosition = newXPosition + 1;
-                    worldMap[userYPosition, oldXPosition] = 0;
+                    worldMap[userYPosition, userXPosition + 1] = 0;
                 }
                 else
                 {
@@ -165,34 +143,13 @@
                 }
             }
             Console.WriteLine("");
-
+           
 
         }
-
 
         static bool validateNewPosition(int[,] worldMap, int newCell, int checkNewHealth, int checkNewYPos, int checkNewXPos, int worldMapRows, int worldMapCols)
         {
             return checkNewXPos >= 0 && checkNewYPos >= 0 && checkNewYPos < worldMapCols && checkNewXPos < worldMapRows;
-            //if 
-            //{
-            //    return true;
-
-            //    //if (checkNewHealth - worldMap[checkNewYPos, checkNewXPos] > 0)
-            //    //{
-            //    //    return true;
-            //    //}
-
-
-            //    //else
-            //    //{
-            //    //    Console.WriteLine("Invalid Move, results in death!");
-            //    //    return false;
-            //    //}
-            //}
-            //else
-            //{
-            //    return false;
-            //}
         }
 
         static void MapGenerator(int baseCell, int userHealth, int[,] worldMap, int userX, int userY)
@@ -214,7 +171,6 @@
             }
         }
 
-
         static void ViewMap(int[,] worldMapDimensions)
         {
             for (int i = 0; i < worldMapDimensions.GetLength(0); i++)
@@ -225,8 +181,6 @@
                 }
                 Console.WriteLine("");
             }
-
         }
-
     }
 }
