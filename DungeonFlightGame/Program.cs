@@ -33,7 +33,14 @@
                 Console.WriteLine("Map:");
                 ViewMap(worldMap);
                 Console.WriteLine("");
-                Console.WriteLine($"Health: {playerHealth}, Y Position: {playerY}, X Position; {playerX}");
+                //TODO: Make this more ~elegant
+                if (playerY == worldMapRows - 1 && playerX == worldMapCols - 1)
+                {
+                    gameRunning = false;
+                    Console.WriteLine("You Win!");
+                    break;
+                }
+
                 if (playerHealth <= 0)
                 {
                     playerHealth = 0;
@@ -90,7 +97,6 @@
                     }
                     return direction;
                 }
-
             }
         }
 
@@ -108,16 +114,15 @@
         }
 
         static void PositionUpdate(int baseCell, ref int userHealth, int[,] worldMap,
-                              ref int userYPosition, ref int userXPosition, 
-                              int worldMapRows, int worldMapCols, 
-                              (int, int) playerOffset)
+                                   ref int userYPosition, ref int userXPosition, 
+                                   int worldMapRows, int worldMapCols, 
+                                   (int, int) playerOffset)
         {
             Console.Clear();
             int checkNewYPos = userYPosition + playerOffset.Item1;
             int checkNewXPos = userXPosition + playerOffset.Item2;
             if (ValidateNewPosition(worldMap, baseCell, userHealth, checkNewXPos, checkNewYPos, worldMapRows, worldMapCols))
             {
-
                 userHealth -= worldMap[checkNewYPos, checkNewXPos];
                 userYPosition = checkNewYPos;
                 userXPosition = checkNewXPos;
@@ -152,7 +157,6 @@
                     {
                         worldMap[i, j] = baseCell;
                     }
-
                 }
             }
         }
