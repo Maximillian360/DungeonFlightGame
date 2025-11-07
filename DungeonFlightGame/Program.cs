@@ -10,15 +10,14 @@
             None
         }
 
-        //public struct Offset {
-        //    int y;
-        //    int x;
-        //}
-
         static void Main(string[] args)
         {
+            //TODO: Refactor this abomination, especially the random values
             Direction playerInput;
-            int[,] worldMap = new int[7, 4];
+            Random random = new Random();
+            int mapLength = random.Next(10, 15);
+            int mapWidth = random.Next(10, 15);
+            int[,] worldMap = new int[mapLength, mapWidth];
             int worldMapRows = worldMap.GetLength(0);
             int worldMapCols = worldMap.GetLength(1);
             int playerX = 0;
@@ -31,11 +30,13 @@
             bool gameRunning = true;
             while (gameRunning)
             {
+                Console.Clear();
                 Console.WriteLine("Map:");
                 ViewMap(worldMap);
                 Console.WriteLine("");
+                Console.WriteLine($"Map Length: {mapLength}, Map Width: {mapWidth}");
                 //TODO: Make this more ~elegant
-                if (playerY == worldMapRows - 1 && playerX == worldMapCols - 1)
+                if ((playerY == worldMapRows - 1 && playerX == worldMapCols - 1) && playerHealth > 0)
                 {
                     gameRunning = false;
                     Console.WriteLine("You Win!");
@@ -119,7 +120,7 @@
                                    int worldMapRows, int worldMapCols, 
                                    (int, int) playerOffset)
         {
-            Console.Clear();
+            //Console.Clear();
             int checkNewYPos = userYPosition + playerOffset.Item1;
             int checkNewXPos = userXPosition + playerOffset.Item2;
             if (ValidateNewPosition(worldMap, baseCell, userHealth, checkNewXPos, checkNewYPos, worldMapRows, worldMapCols))
@@ -146,6 +147,7 @@
 
         static void MapGenerator(int baseCell, int userHealth, int[,] worldMap, int userX, int userY, int healthDifficultyMultiplier)
         {
+            //TODO: Make the RNG implementation "better"
             Random random = new Random();
             int enemyHealthModifier = 0;
             for (int i = 0; i < worldMap.GetLength(0); i++)
@@ -167,11 +169,12 @@
 
         static void ViewMap(int[,] worldMapDimensions)
         {
+            char padding = ' ';
             for (int i = 0; i < worldMapDimensions.GetLength(0); i++)
             {
                 for (int j = 0; j < worldMapDimensions.GetLength(1); j++)
                 {
-                    Console.Write($"{worldMapDimensions[i, j]} ");
+                    Console.Write($"|{worldMapDimensions[i, j]}|".PadRight(4, padding));
                 }
                 Console.WriteLine("");
             }
