@@ -24,9 +24,10 @@
             int playerX = 0;
             int playerY = 0;
             int playerHealth = 90;
-            int enemyHealth = 2;
+            int enemyBaseHealth = 2;
+            int difficultyMultiplier = 1;
             (int, int) playerOffset = (0, 0);
-            MapGenerator(enemyHealth, playerHealth, worldMap, playerX, playerY);
+            MapGenerator(enemyBaseHealth, playerHealth, worldMap, playerX, playerY, difficultyMultiplier);
             bool gameRunning = true;
             while (gameRunning)
             {
@@ -52,7 +53,7 @@
                 {
                     playerInput = GetPlayerDirection();
                     playerOffset = DirectionOffsetMapper(playerInput);
-                    PositionUpdate(enemyHealth, ref playerHealth, worldMap, 
+                    PositionUpdate(enemyBaseHealth, ref playerHealth, worldMap, 
                               ref playerY, ref playerX, worldMapRows, worldMapCols, playerOffset);
                 }
 
@@ -127,7 +128,7 @@
                 userYPosition = checkNewYPos;
                 userXPosition = checkNewXPos;
                 worldMap[userYPosition, userXPosition] = userHealth;
-                worldMap[userYPosition - playerOffset.Item1, userXPosition - playerOffset.Item2] = 0;;
+                worldMap[userYPosition - playerOffset.Item1, userXPosition - playerOffset.Item2] = 0;
             }
             else
             {
@@ -143,8 +144,10 @@
             return checkNewX >= 0 && checkNewY >= 0 && checkNewY < worldMapRows  && checkNewX < worldMapCols;
         }
 
-        static void MapGenerator(int baseCell, int userHealth, int[,] worldMap, int userX, int userY)
+        static void MapGenerator(int baseCell, int userHealth, int[,] worldMap, int userX, int userY, int healthDifficultyMultiplier)
         {
+            Random random = new Random();
+            int enemyHealthModifier = 0;
             for (int i = 0; i < worldMap.GetLength(0); i++)
             {
                 for (int j = 0; j < worldMap.GetLength(1); j++)
@@ -155,7 +158,8 @@
                     }
                     else
                     {
-                        worldMap[i, j] = baseCell;
+                        enemyHealthModifier = random.Next(1, 5);
+                        worldMap[i, j] = (baseCell + enemyHealthModifier) * healthDifficultyMultiplier;
                     }
                 }
             }
