@@ -22,7 +22,7 @@
             int worldMapCols = worldMap.GetLength(1);
             int playerX = 0;
             int playerY = 0;
-            int playerHealth = 90;
+            int playerHealth = 120;
             int enemyBaseHealth = 2;
             int difficultyMultiplier = 1;
             (int, int) playerOffset = (0, 0);
@@ -79,24 +79,21 @@
                 {
                     continue;
                 }
-
-                if (!(temporaryPlayerInput == "w" || temporaryPlayerInput == "s" || temporaryPlayerInput == "a" || temporaryPlayerInput == "d"))
+                if (temporaryPlayerInput is not ("w" or "s" or "a" or "d"))
                 {
                     continue;
                 }
                 else
                 {
-                    switch (temporaryPlayerInput)
+                    direction = temporaryPlayerInput switch
                     {
-                        case "w":
-                            direction = Direction.Up; break;
-                        case "s":
-                            direction = Direction.Down; break;
-                        case "a":
-                            direction = Direction.Left; break;
-                        case "d":
-                            direction = Direction.Right; break;
-                    }
+                        "w" => Direction.Up,
+                        "s" => Direction.Down,
+                        "a" => Direction.Left,
+                        "d" => Direction.Right,
+                        _ => Direction.None
+                            
+                    };
                     return direction;
                 }
             }
@@ -120,7 +117,7 @@
                                    int worldMapRows, int worldMapCols, 
                                    (int, int) playerOffset)
         {
-            //Console.Clear();
+            Console.Clear();
             int checkNewYPos = userYPosition + playerOffset.Item1;
             int checkNewXPos = userXPosition + playerOffset.Item2;
             if (ValidateNewPosition(worldMap, baseCell, userHealth, checkNewXPos, checkNewYPos, worldMapRows, worldMapCols))
@@ -136,8 +133,6 @@
                 Console.WriteLine("Try Again!");
             }
             Console.WriteLine("");
-           
-
         }
 
         static bool ValidateNewPosition(int[,] worldMap, int newCell, int checkNewHealth, int checkNewX, int checkNewY, int worldMapRows, int worldMapCols)
@@ -148,8 +143,7 @@
         static void MapGenerator(int baseCell, int userHealth, int[,] worldMap, int userX, int userY, int healthDifficultyMultiplier)
         {
             //TODO: Make the RNG implementation "better"
-            Random random = new Random();
-            int enemyHealthModifier = 0;
+            
             for (int i = 0; i < worldMap.GetLength(0); i++)
             {
                 for (int j = 0; j < worldMap.GetLength(1); j++)
@@ -160,6 +154,8 @@
                     }
                     else
                     {
+                        Random random = new Random();
+                        int enemyHealthModifier = 0;
                         enemyHealthModifier = random.Next(1, 5);
                         worldMap[i, j] = (baseCell + enemyHealthModifier) * healthDifficultyMultiplier;
                     }
