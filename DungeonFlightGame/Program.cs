@@ -120,7 +120,6 @@
                                    int worldMapRows, int worldMapCols, 
                                    (int, int) playerOffset)
         {
-            //Console.Clear();
             int checkNewYPos = userYPosition + playerOffset.Item1;
             int checkNewXPos = userXPosition + playerOffset.Item2;
             if (ValidateNewPosition(worldMap, baseCell, userHealth, checkNewXPos, checkNewYPos, worldMapRows, worldMapCols))
