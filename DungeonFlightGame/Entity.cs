@@ -2,28 +2,27 @@
 
 public class Entity
 {
-    private string entityName;
-    private int entityXPosition;
-    private int entityYPosition;
-    private int entityHealth;
-    private (int, int) entityOffset;
-    private Direction entityDirection;
+    public string Name { get; }
+    public string Type { get; }
+    public char Glyph { get; }
+    public int PositionX { get; private set; }
+    public int PositionY { get; private set; }
+    public int Health { get; private set; }
+    public (int, int) Offset { get; private set; }
+    public Direction Direction { get; private set; }
 
-    public Entity(string entityName, int entityXPosition, int entityYPosition, int entityHealth, (int, int) entityOffset, Direction entityDirection)
+    public Entity(string name, string type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction)
     {
-        this.entityName = entityName;
-        this.entityXPosition = entityXPosition;
-        this.entityYPosition = entityYPosition;
-        this.entityHealth = entityHealth;
-        this.entityOffset = entityOffset;
-        this.entityDirection = entityDirection;
+        this.Name = name;
+        this.Type = type;
+        this.Glyph = glyph;
+        this.PositionX = positionX;
+        this.PositionY = positionY;
+        this.Health = health;
+        this.Offset = offset;
+        this.Direction = direction;
     }
-
-    public void GetEntityDirection()
-    {
-        
-    }
-
+    
     public void EntityMove()
     {
         
@@ -44,4 +43,10 @@ public enum Direction {
     Left, 
     Right,
     None
+}
+
+struct Position 
+{
+    public int x;
+    public int y;
 }

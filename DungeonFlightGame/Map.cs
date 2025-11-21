@@ -2,20 +2,15 @@
 
 public class Map
 {
-    private int worldMapWidth;
-    private int worldMapHeight;
-    private int[,] worldMap;
+    public int WorldMapCols { get; }
+    public int WorldMapRows { get; }
+    public int[,] WorldMap { get; }
     
-    public  Map(int worldMapWidth, int worldMapHeight, int[,] worldMap)
+    public  Map(int worldMapCols, int worldMapRows, int[,] worldMap)
     {
-        this.worldMapWidth = worldMapWidth;
-        this.worldMapHeight = worldMapHeight;
-        this.worldMap = worldMap;
-    }
-
-    public void GenerateWorldMap()
-    {
-        
+        this.WorldMapCols = worldMapCols;
+        this.WorldMapRows = worldMapRows;
+        this.WorldMap = worldMap;
     }
     
     public void ViewWorldMap()
