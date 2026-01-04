@@ -4,13 +4,15 @@ public class Map
 {
     public int WorldMapCols { get; }
     public int WorldMapRows { get; }
-    public int[,] WorldMap { get; }
+    public Tile?[,] WorldMap { get; }
     
-    public  Map(int worldMapCols, int worldMapRows, int[,] worldMap)
+    public Map()
     {
-        this.WorldMapCols = worldMapCols;
-        this.WorldMapRows = worldMapRows;
-        this.WorldMap = worldMap;
+        Random random = new Random();
+        WorldMapCols = random.Next(10, 15);
+        WorldMapRows = random.Next(10, 15);
+        Tile?[,] worldMap = new Tile?[WorldMapCols, WorldMapRows];
+
     }
     
     public void ViewWorldMap()

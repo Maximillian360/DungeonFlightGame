@@ -13,14 +13,14 @@ public class Entity
 
     public Entity(string name, string type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction)
     {
-        this.Name = name;
-        this.Type = type;
-        this.Glyph = glyph;
-        this.PositionX = positionX;
-        this.PositionY = positionY;
-        this.Health = health;
-        this.Offset = offset;
-        this.Direction = direction;
+        Name = name;
+        Type = type;
+        Glyph = glyph;
+        PositionX = positionX;
+        PositionY = positionY;
+        Health = health;
+        Offset = offset;
+        Direction = direction;
     }
     
     public void EntityMove()
@@ -43,10 +43,4 @@ public enum Direction {
     Left, 
     Right,
     None
-}
-
-struct Position 
-{
-    public int x;
-    public int y;
 }
