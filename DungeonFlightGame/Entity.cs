@@ -3,7 +3,7 @@
 public class Entity
 {
     public string Name { get; }
-    public string Type { get; }
+    public Type Type { get; }
     public char Glyph { get; }
     public int PositionX { get; private set; }
     public int PositionY { get; private set; }
@@ -11,7 +11,7 @@ public class Entity
     public (int, int) Offset { get; private set; }
     public Direction Direction { get; private set; }
 
-    public Entity(string name, string type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction)
+    public Entity(string name, Type type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction)
     {
         Name = name;
         Type = type;
@@ -33,7 +33,18 @@ public class Entity
     {
         
     }
+
+    public static Entity EnemyFactory(int x, int y)
+    {
+        Random random = new Random();
+        return new Entity("Enemy", Type.Enemy, '*', x, y, random.Next(5, 10), (0,0), Direction.None);
+    }
     
+    public static Entity PlayerFactory()
+    {
+        Random random = new Random();
+        return new Entity("Player", Type.Player, '@', 0, 0, random.Next(60, 65), (0,0), Direction.None);
+    }
     
 }
 
@@ -44,3 +55,11 @@ public enum Direction {
     Right,
     None
 }
+
+public enum Type
+{
+    Enemy,
+    Player
+}
+
+
