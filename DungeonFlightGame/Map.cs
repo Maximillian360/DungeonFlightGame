@@ -15,6 +15,16 @@ public class Map
 
     }
     
+    public void ValidateNewPosition()
+    {
+        
+    }
+
+    public void PositionUpdate()
+    {
+        
+    }
+    
     public void ViewWorldMap()
     {
         

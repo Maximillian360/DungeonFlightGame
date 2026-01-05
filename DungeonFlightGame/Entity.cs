@@ -23,16 +23,23 @@ public class Entity
         Direction = direction;
     }
     
-    public void EntityMove()
-    {
-        
-        
-    }
 
     public void EntityTakeDamage()
     {
         
     }
+
+    public void GetEntityInput()
+    {
+        
+    }
+
+    public void InputOffsetMapper(Direction direction)
+    {
+        
+    }
+
+
 
     public static Entity EnemyFactory(int x, int y)
     {
