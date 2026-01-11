@@ -135,8 +135,7 @@
                 Console.WriteLine("Try Again!");
             }
             Console.WriteLine("");
-           
-
+            
         }
 
         static bool ValidateNewPosition(int[,] worldMap, int newCell, int checkNewHealth, int checkNewX, int checkNewY, int worldMapRows, int worldMapCols)
