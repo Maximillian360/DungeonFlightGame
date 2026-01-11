@@ -12,11 +12,33 @@ public class Map
         WorldMapCols = random.Next(15, 20);
         WorldMapRows = random.Next(15, 20);
         Tile[,] WorldMap = new Tile?[WorldMapCols, WorldMapRows];
-        
+        for (int i = 0; i < WorldMapCols; i++)
+        {
+            for (int j = 0; j < WorldMapRows; j++)
+            {
+                if (!ValidatePosition(i, j))
+                {
+                    Console.WriteLine("Error, Invalid Position: {i}, {j}!");
+                }
+
+                if (IsTileOccupied(i, j))
+                {
+                    Console.WriteLine("Position: {i}, {j} is occupied!");
+                }
+                
+                PositionUpdate((i,j));
+                
+            }
+        }
 
     }
 
     public Entity? GetEntity(int x, int y) => ValidatePosition(x, y) ? WorldMap[x, y].Entity : null;
+
+    public bool IsTileOccupied(int x, int y)
+    {
+        return GetEntity(x, y) != null;
+    }
     
     public bool ValidatePosition(int newX, int newY)
     {
@@ -30,6 +52,7 @@ public class Map
             Console.WriteLine("Error, Invalid Position: {playerOffset.Item1}, {playerOffset.Item2}!");
             return;
         }
+        
         
         
     }
