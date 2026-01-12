@@ -86,17 +86,14 @@
                 }
                 else
                 {
-                    switch (temporaryPlayerInput)
+                    direction = temporaryPlayerInput switch
                     {
-                        case "w":
-                            direction = Direction.Up; break;
-                        case "s":
-                            direction = Direction.Down; break;
-                        case "a":
-                            direction = Direction.Left; break;
-                        case "d":
-                            direction = Direction.Right; break;
-                    }
+                        "w" => Direction.Up,
+                        "s" => Direction.Down,
+                        "a" => Direction.Left,
+                        "d" => Direction.Right,
+                        _ => direction
+                    };
                     return direction;
                 }
             }

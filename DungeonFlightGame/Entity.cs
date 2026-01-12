@@ -8,6 +8,7 @@ public class Entity
     public int PositionX { get; private set; }
     public int PositionY { get; private set; }
     public int Health { get; private set; }
+    public int Damage { get; private set; }
     public (int, int) Offset { get; private set; }
     public Direction Direction { get; private set; }
 
@@ -19,24 +20,61 @@ public class Entity
         PositionX = positionX;
         PositionY = positionY;
         Health = health;
+        Damage = health;
         Offset = offset;
         Direction = direction;
     }
     
 
-    public void EntityTakeDamage()
+    public void EntityTakeDamage(Entity entity)
     {
-        
+        Health -= entity.Damage;
     }
 
-    public void GetEntityInput()
+    public Direction GetEntityInput()
     {
-        
+        while (true)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("W: for Up, S: for Down, D: for Right, A: for Left. ");
+            string? temporaryInput = Console.ReadLine()?.ToUpper();
+            Direction direction = Direction.None;
+            if (string.IsNullOrEmpty(temporaryInput))
+            {
+                Console.WriteLine("Input cannot be empty or null!");
+                continue;
+            }
+
+            if (!(temporaryInput == "W" || temporaryInput == "S" || temporaryInput == "A" || temporaryInput == "D"))
+            {
+                Console.WriteLine($"Input not recognized: Player Input: {temporaryInput}");
+                continue;
+            }
+
+            direction = temporaryInput switch
+            {
+                "W" => Direction.Up,
+                "S" => Direction.Down,
+                "A" => Direction.Left,
+                "D" => Direction.Right,
+                _ => direction
+            };
+            
+            return direction;
+        }
     }
 
-    public void InputOffsetMapper(Direction direction)
+    public (int dx, int dy) OffsetDirectionMapper(Direction direction)
     {
-        
+        var entityOffset = direction switch
+        {
+            Direction.Up => (-1, 0),
+            Direction.Down => (1, 0),
+            Direction.Left => (0, -1),
+            Direction.Right => (0, 1),
+            _ => (0, 0)
+        };
+        return entityOffset;
     }
 
     public void PositionUpdate(int newX, int newY)
