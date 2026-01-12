@@ -36,7 +36,6 @@ public class Map
             Console.WriteLine($"Position: {x}, {y} is occupied!");
             return false;
         }
-        
         return true;
     }
 
@@ -45,18 +44,6 @@ public class Map
     {
         int currentX = entity.PositionX;
         int currentY = entity.PositionY;
-        
-        // if (!IsPositionInside(newPosition.x, newPosition.y))
-        // {
-        //     Console.WriteLine($"Error, Invalid Position: {newPosition.x}, {newPosition.y}!");
-        //     return;
-        // }
-        //
-        // if (IsTileOccupied(newPosition.x, newPosition.y))
-        // {
-        //     Console.WriteLine($"Position: {newPosition.x}, {newPosition.y} is occupied!");
-        //     return;
-        // }
         
         if (WorldMap[currentX, currentY].Entity == null)
         {
@@ -83,22 +70,13 @@ public class Map
 
     public void MapMaker()
     {
+        Entity player = Entity.PlayerFactory(); 
+        WorldMap[0, 0].Entity = player;
         for (int i = 0; i < WorldMapRows; i++)
         {
             for (int j = 0; j < WorldMapCols; j++)
             {
                 WorldMap[i, j] = new Tile();
-                // if (!IsPositionInside(i, j))
-                // {
-                //     Console.WriteLine($"Error, Invalid Position: {i}, {j}!");
-                //     continue;
-                // }
-                //
-                // if (IsTileOccupied(i, j))
-                // {
-                //     Console.WriteLine($"Position: {i}, {j} is occupied!");
-                //     continue;
-                // }
 
                 if (!IsPositionValid(i, j))
                 {
@@ -106,17 +84,10 @@ public class Map
                     continue;
                 }
                 
-                if (i == 0 && j == 0)
-                {
-                    Entity player = Entity.PlayerFactory(); 
-                    WorldMap[i, j].Entity = player;
-                }
-
-                else
-                {
-                    Entity enemy = Entity.EnemyFactory(i, j);
-                    WorldMap[i, j].Entity = enemy;
-                }
+                if (i == 0 && j == 0) continue;
+                
+                Entity enemy = Entity.EnemyFactory(i, j);
+                WorldMap[i, j].Entity = enemy;
             }
         }
     }
@@ -134,5 +105,4 @@ public class Map
             Console.WriteLine();
         }
     }
-
 }

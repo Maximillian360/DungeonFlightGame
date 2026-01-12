@@ -24,7 +24,6 @@ public class Entity
         Offset = offset;
         Direction = direction;
     }
-    
 
     public void EntityTakeDamage(Entity entity)
     {
@@ -83,8 +82,6 @@ public class Entity
         PositionY = newY;
     }
 
-
-
     public static Entity EnemyFactory(int x, int y)
     {
         Random random = new Random();
@@ -96,7 +93,6 @@ public class Entity
         Random random = new Random();
         return new Entity("Player", Type.Player, '@', 0, 0, random.Next(60, 65), (0,0), Direction.None);
     }
-    
 }
 
 public enum Direction { 
