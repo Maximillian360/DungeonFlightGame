@@ -39,6 +39,12 @@ public class Entity
         
     }
 
+    public void PositionUpdate(int newX, int newY)
+    {
+        PositionX = newX;
+        PositionY = newY;
+    }
+
 
 
     public static Entity EnemyFactory(int x, int y)
