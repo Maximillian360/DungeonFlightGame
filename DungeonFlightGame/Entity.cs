@@ -8,11 +8,12 @@ public class Entity
     public int PositionX { get; private set; }
     public int PositionY { get; private set; }
     public int Health { get; private set; }
+    public LifeState State { get; private set; }
     public int Damage { get; private set; }
     public (int, int) Offset { get; private set; }
     public Direction Direction { get; private set; }
 
-    public Entity(string name, Type type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction)
+    public Entity(string name, Type type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction,  LifeState state = LifeState.Alive)
     {
         Name = name;
         Type = type;
@@ -20,6 +21,7 @@ public class Entity
         PositionX = positionX;
         PositionY = positionY;
         Health = health;
+        State = state;
         Damage = health;
         Offset = offset;
         Direction = direction;
@@ -28,7 +30,13 @@ public class Entity
     public void EntityTakeDamage(Entity entity)
     {
         Health -= entity.Damage;
+        if (Health <= 0)
+        {
+            State = LifeState.Dead;
+        }
     }
+    
+    public bool IsDead() => State == LifeState.Dead;
 
     public Direction GetEntityInput()
     {
@@ -85,13 +93,13 @@ public class Entity
     public static Entity EnemyFactory(int x, int y)
     {
         Random random = new Random();
-        return new Entity("Enemy", Type.Enemy, '*', x, y, random.Next(5, 10), (0,0), Direction.None);
+        return new Entity("Enemy", Type.Enemy, '*', x, y, random.Next(5, 10), (0,0), Direction.None, LifeState.Alive);
     }
     
     public static Entity PlayerFactory()
     {
         Random random = new Random();
-        return new Entity("Player", Type.Player, '@', 0, 0, random.Next(60, 65), (0,0), Direction.None);
+        return new Entity("Player", Type.Player, '@', 0, 0, random.Next(60, 65), (0,0), Direction.None, LifeState.Alive);
     }
 }
 
@@ -109,4 +117,9 @@ public enum Type
     Player
 }
 
+public enum LifeState
+{
+    Alive,
+    Dead
+}
 

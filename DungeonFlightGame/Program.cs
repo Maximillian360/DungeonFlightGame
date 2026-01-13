@@ -4,13 +4,18 @@
     {
         static void Main(string[] args)
         {
-            
-            
-            
-            
+            Console.WriteLine("Hello World!");
+            PlayGame();
+
+
         }
-        
-        
+
+        static void PlayGame()
+        {
+            Map map = new Map();
+            map.ViewWorldMap();
+            ;
+        }
         
         
         

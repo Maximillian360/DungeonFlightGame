@@ -12,7 +12,7 @@ public class Map
         WorldMapCols = random.Next(15, 20);
         WorldMapRows = random.Next(15, 20);
         WorldMap = new Tile[WorldMapRows, WorldMapCols];
-        MapMaker();
+        GenerateMap();
         
     }
 
@@ -68,25 +68,25 @@ public class Map
         WorldMap[currentX, currentY].Entity = null;
     }
 
-    public void MapMaker()
+    public void GenerateMap()
     {
-        Entity player = Entity.PlayerFactory(); 
+        var player = Entity.PlayerFactory(); 
+        WorldMap[0, 0] = new Tile();
         WorldMap[0, 0].Entity = player;
         for (int i = 0; i < WorldMapRows; i++)
         {
             for (int j = 0; j < WorldMapCols; j++)
             {
+                if (i == 0 && j == 0) continue;
+                
                 WorldMap[i, j] = new Tile();
-
+                
                 if (!IsPositionValid(i, j))
                 {
                     Console.WriteLine("Something went wrong!");
                     continue;
                 }
-                
-                if (i == 0 && j == 0) continue;
-                
-                Entity enemy = Entity.EnemyFactory(i, j);
+                var enemy = Entity.EnemyFactory(i, j);
                 WorldMap[i, j].Entity = enemy;
             }
         }
@@ -95,12 +95,13 @@ public class Map
     public void ViewWorldMap()
     {
         char padding = ' ';
+        Console.WriteLine($"Map  size: Rows: {WorldMapRows} * Cols: {WorldMapCols} = {WorldMapRows * WorldMapCols}");
         for (int i = 0; i < WorldMapRows; i++)
         {
             for (int j = 0; j < WorldMapCols; j++)
             {
                 Entity? e = GetEntity(i, j);
-                Console.WriteLine(e == null ? "| |".PadRight(4, padding) : $"|{e.Glyph}|".PadRight(4, padding));
+                Console.Write(e == null ? "| |".PadRight(4, padding) : $"|{e.Glyph}|".PadRight(4, padding));
             }
             Console.WriteLine();
         }
