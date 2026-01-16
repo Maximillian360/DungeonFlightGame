@@ -4,7 +4,11 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.ForegroundColor = ConsoleColor.Green;   
+            Console.Write("Hello ");
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("World!");
+            Console.ResetColor();
             PlayGame();
 
 
@@ -12,8 +16,18 @@
 
         static void PlayGame()
         {
+            
             Map map = new Map();
             map.ViewWorldMap();
+
+            while (true)
+            {
+                Entity? player = map.GetEntityById(1);;
+                if (player == null) continue;
+                Direction direction = player.GetEntityInput();
+                (int, int) offset = player.OffsetDirectionMapper(direction);
+                
+            }
         }
         
         

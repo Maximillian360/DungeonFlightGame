@@ -18,6 +18,22 @@ public class Map
 
     public Entity? GetEntity(int x, int y) => IsPositionInside(x, y) ? WorldMap[x, y].Entity : null;
 
+    public Entity? GetEntityById(int id)
+    {
+        for (int i = 0; i < WorldMapRows; i++)
+        {
+            for (int j = 0; j < WorldMapCols; j++)
+            {
+                Tile? tile = GetTile(i, j);
+                if (tile == null) continue;
+                if (tile.Entity == null) continue;
+                if (tile.Entity.Id != id) continue;
+                return tile.Entity;
+            }
+        }
+        return null;
+    }
+
     public Tile? GetTile(int x, int y) => IsPositionInside(x, y) ? WorldMap[x, y] : null;
 
     public bool IsTileOccupied(int x, int y) => GetEntity(x, y) != null;
@@ -102,6 +118,7 @@ public class Map
 
     public void ViewWorldMap()
     {
+        // Console.Clear();
         char padding = ' ';
         Console.WriteLine($"Map  size: Rows: {WorldMapRows} * Cols: {WorldMapCols} = {WorldMapRows * WorldMapCols}");
         for (int i = 0; i < WorldMapRows; i++)
