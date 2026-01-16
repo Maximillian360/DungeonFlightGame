@@ -4,6 +4,7 @@ public class Entity
 {
     public string Name { get; }
     public Type Type { get; }
+    public int Id { get; private set; }
     public char Glyph { get; }
     public int PositionX { get; private set; }
     public int PositionY { get; private set; }
@@ -12,11 +13,14 @@ public class Entity
     public int Damage { get; private set; }
     public (int, int) Offset { get; private set; }
     public Direction Direction { get; private set; }
+    
+    private static int _counter = 1;
 
     public Entity(string name, Type type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction,  LifeState state = LifeState.Alive)
     {
         Name = name;
         Type = type;
+        Id = _counter;
         Glyph = glyph;
         PositionX = positionX;
         PositionY = positionY;
@@ -25,6 +29,7 @@ public class Entity
         Damage = health;
         Offset = offset;
         Direction = direction;
+        _counter++;
     }
 
     public void EntityTakeDamage(Entity entity)

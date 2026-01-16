@@ -14,7 +14,6 @@
         {
             Map map = new Map();
             map.ViewWorldMap();
-            ;
         }
         
         
