@@ -106,6 +106,11 @@ public class Entity
         Random random = new Random();
         return new Entity("Player", Type.Player, '@', 0, 0, random.Next(60, 65), (0,0), Direction.None, LifeState.Alive);
     }
+
+    public (int, int) GetEntityPosition(Entity entity)
+    {
+        return (entity.PositionX, entity.PositionY);
+    }
 }
 
 public enum Direction { 

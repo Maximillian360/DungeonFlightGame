@@ -68,6 +68,8 @@ public class Map
     {
         int currentX = entity.PositionX;
         int currentY = entity.PositionY;
+        newPosition.x += currentX;
+        newPosition.y += currentY;
         
         if (WorldMap[currentX, currentY].Entity == null)
         {
@@ -118,9 +120,10 @@ public class Map
 
     public void ViewWorldMap()
     {
-        // Console.Clear();
+        Console.Clear();
         char padding = ' ';
         Console.WriteLine($"Map  size: Rows: {WorldMapRows} * Cols: {WorldMapCols} = {WorldMapRows * WorldMapCols}");
+        
         for (int i = 0; i < WorldMapRows; i++)
         {
             for (int j = 0; j < WorldMapCols; j++)
@@ -130,5 +133,6 @@ public class Map
             }
             Console.WriteLine();
         }
+        
     }
 }
