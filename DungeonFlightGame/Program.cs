@@ -18,18 +18,18 @@
         {
             
             Map map = new Map();
-            
+            Entity player = map.GetEntityById(1);
 
-            while (true)
+            while (player.State == LifeState.Alive)
             {
                 map.ViewWorldMap();
-                Entity? player = map.GetEntityById(1);;
-                if (player == null) continue;
                 Direction direction = player.GetEntityInput();
                 (int dx, int dy) offset = player.OffsetDirectionMapper(direction);
                 map.TryPositionUpdate(offset, player);
                
             }
+            Console.WriteLine("Game Over!");
+            Console.WriteLine($"Player Health: {player.Health}");
         }
         
         

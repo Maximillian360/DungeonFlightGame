@@ -9,7 +9,7 @@ public class Entity
     public int PositionX { get; private set; }
     public int PositionY { get; private set; }
     public int Health { get; private set; }
-    public LifeState State { get; private set; }
+    public LifeState State { get; set; }
     public int Damage { get; private set; }
     public (int, int) Offset { get; private set; }
     public Direction Direction { get; private set; }
@@ -32,16 +32,19 @@ public class Entity
         _counter++;
     }
 
-    public void EntityTakeDamage(Entity entity)
+    public void TakeDamage(Entity entity)
     {
         Health -= entity.Damage;
+        entity.Health -= Damage;
+        if (entity.Health <= 0)
+        {
+            entity.State = LifeState.Dead;
+        }
         if (Health <= 0)
         {
             State = LifeState.Dead;
         }
     }
-    
-    public bool IsDead() => State == LifeState.Dead;
 
     public Direction GetEntityInput()
     {

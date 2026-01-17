@@ -1,4 +1,6 @@
-﻿namespace DungeonFlightGame;
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace DungeonFlightGame;
 
 public class Map
 {
@@ -35,8 +37,6 @@ public class Map
     }
 
     public Tile? GetTile(int x, int y) => IsPositionInside(x, y) ? WorldMap[x, y] : null;
-
-    public bool IsTileOccupied(int x, int y) => GetEntity(x, y) != null;
     
     public bool IsPositionInside(int newX, int newY) => newX >= 0 && newY >= 0 && newX < WorldMapRows && newY < WorldMapCols;
     
@@ -55,7 +55,7 @@ public class Map
             return false;
         }
 
-        if (IsTileOccupied(x, y))
+        if (GetEntity(x, y) != null)
         {
             Console.WriteLine($"Position: {x}, {y} is occupied!");
             return false;
@@ -71,22 +71,25 @@ public class Map
         newPosition.x += currentX;
         newPosition.y += currentY;
         
-        if (WorldMap[currentX, currentY].Entity == null)
+
+
+        if (!IsPositionInside(newPosition.x, newPosition.y))
         {
-            Console.WriteLine("No entity found in source coordinates!");
+            Console.WriteLine("Position is out of bounds!");
+            return;
+        }
+
+        if (GetTile(newPosition.x, newPosition.y) == null)
+        {
+            Console.WriteLine("No tile found!");
             return;
         }
         
-        if (!IsPositionValid(newPosition.x, newPosition.y))
+        if (GetEntity(newPosition.x, newPosition.y) != null)
         {
-            Console.WriteLine("Something went wrong!");
-            return;
-        }
-        
-        if (WorldMap[currentX, currentY].Entity != entity)
-        {
-            Console.WriteLine($"Entity at position: {newPosition.x}, {newPosition.y} is not equal to {entity.PositionX}, {entity.PositionY}!");
-            return;
+            Entity idleEntity = GetEntity(newPosition.x, newPosition.y);
+            idleEntity.TakeDamage(entity);
+            
         }
         
         WorldMap[newPosition.x, newPosition.y].Entity = WorldMap[currentX, currentY].Entity;
@@ -120,9 +123,11 @@ public class Map
 
     public void ViewWorldMap()
     {
-        Console.Clear();
+        // Console.Clear();
         char padding = ' ';
         Console.WriteLine($"Map  size: Rows: {WorldMapRows} * Cols: {WorldMapCols} = {WorldMapRows * WorldMapCols}");
+        Entity player = GetEntityById(1);
+        Console.WriteLine($"Entity: {player.Name}, Health: {player.Health}");
         
         for (int i = 0; i < WorldMapRows; i++)
         {
