@@ -70,8 +70,6 @@ public class Map
         int currentY = entity.PositionY;
         newPosition.x += currentX;
         newPosition.y += currentY;
-        
-
 
         if (!IsPositionInside(newPosition.x, newPosition.y))
         {
@@ -89,6 +87,7 @@ public class Map
         {
             Entity idleEntity = GetEntity(newPosition.x, newPosition.y);
             idleEntity.TakeDamage(entity);
+            entity.TakeDamage(idleEntity);
             
         }
         
@@ -123,7 +122,7 @@ public class Map
 
     public void ViewWorldMap()
     {
-        // Console.Clear();
+        Console.Clear();
         char padding = ' ';
         Console.WriteLine($"Map  size: Rows: {WorldMapRows} * Cols: {WorldMapCols} = {WorldMapRows * WorldMapCols}");
         Entity player = GetEntityById(1);

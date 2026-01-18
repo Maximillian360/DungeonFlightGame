@@ -35,11 +35,6 @@ public class Entity
     public void TakeDamage(Entity entity)
     {
         Health -= entity.Damage;
-        entity.Health -= Damage;
-        if (entity.Health <= 0)
-        {
-            entity.State = LifeState.Dead;
-        }
         if (Health <= 0)
         {
             State = LifeState.Dead;
