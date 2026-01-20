@@ -66,8 +66,8 @@ public class Map
 
     public void TryPositionUpdate((int x, int y) newPosition, Entity entity)
     {
-        int currentX = entity.PositionX;
-        int currentY = entity.PositionY;
+        int currentX = entity.Position.X;
+        int currentY = entity.Position.Y;
         newPosition.x += currentX;
         newPosition.y += currentY;
 
@@ -92,7 +92,8 @@ public class Map
         }
         
         WorldMap[newPosition.x, newPosition.y].Entity = WorldMap[currentX, currentY].Entity;
-        WorldMap[newPosition.x, newPosition.y].Entity.PositionUpdate(newPosition.x, newPosition.y);
+        Point newPositionPoint = new Point(newPosition.x, newPosition.y);
+        WorldMap[newPosition.x, newPosition.y].Entity.PositionUpdate(newPositionPoint);
         WorldMap[currentX, currentY].Entity = null;
     }
 

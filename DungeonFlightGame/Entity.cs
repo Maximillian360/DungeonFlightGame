@@ -6,27 +6,26 @@ public class Entity
     public Type Type { get; }
     public int Id { get; private set; }
     public char Glyph { get; }
-    public int PositionX { get; private set; }
-    public int PositionY { get; private set; }
     public int Health { get; private set; }
     public LifeState State { get; set; }
     public int Damage { get; private set; }
-    public (int, int) Offset { get; private set; }
     public Direction Direction { get; private set; }
+    
+    public Point Position { get; private set; }
+    public Point Offset { get; private set; }
     
     private static int _counter = 1;
 
-    public Entity(string name, Type type, char glyph, int positionX, int positionY, int health, (int, int) offset, Direction direction,  LifeState state = LifeState.Alive)
+    public Entity(string name, Type type, char glyph, int health, Point position, Point offset, Direction direction, LifeState state = LifeState.Alive)
     {
         Name = name;
         Type = type;
         Id = _counter;
         Glyph = glyph;
-        PositionX = positionX;
-        PositionY = positionY;
         Health = health;
         State = state;
         Damage = health;
+        Position = position;
         Offset = offset;
         Direction = direction;
         _counter++;
@@ -87,27 +86,23 @@ public class Entity
         return entityOffset;
     }
 
-    public void PositionUpdate(int newX, int newY)
-    {
-        PositionX = newX;
-        PositionY = newY;
-    }
-
+    public void PositionUpdate(Point newPosition) => Position = newPosition;
+    
     public static Entity EnemyFactory(int x, int y)
     {
         Random random = new Random();
-        return new Entity("Enemy", Type.Enemy, '*', x, y, random.Next(5, 10), (0,0), Direction.None, LifeState.Alive);
+        return new Entity("Enemy", Type.Enemy, '*', random.Next(5, 10), new Point(x, y), new Point(0,0), Direction.None, LifeState.Alive);
     }
     
     public static Entity PlayerFactory()
     {
         Random random = new Random();
-        return new Entity("Player", Type.Player, '@', 0, 0, random.Next(60, 65), (0,0), Direction.None, LifeState.Alive);
+        return new Entity("Player", Type.Player, '@', random.Next(60, 65), new Point(0,0), new Point(0,0), Direction.None, LifeState.Alive);
     }
 
     public (int, int) GetEntityPosition(Entity entity)
     {
-        return (entity.PositionX, entity.PositionY);
+        return (entity.Position.X, entity.Position.Y);
     }
 }
 
