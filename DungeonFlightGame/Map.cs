@@ -126,9 +126,13 @@ public class Map
         Console.Clear();
         char padding = ' ';
         Console.WriteLine($"Map  size: Rows: {WorldMapRows} * Cols: {WorldMapCols} = {WorldMapRows * WorldMapCols}");
-        Entity player = GetEntityById(1);
+        Entity? player = GetEntityById(1);
+        if (player == null)
+        {
+            Console.WriteLine("Player not found!");
+            return;
+        }
         Console.WriteLine($"Entity: {player.Name}, Health: {player.Health}");
-        
         for (int i = 0; i < WorldMapRows; i++)
         {
             for (int j = 0; j < WorldMapCols; j++)
