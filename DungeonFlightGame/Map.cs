@@ -64,36 +64,38 @@ public class Map
     }
 
 
-    public void TryPositionUpdate((int x, int y) newPosition, Entity entity)
+    public void TryPositionUpdate(Point newPoint, Entity entity)
     {
         int currentX = entity.Position.X;
         int currentY = entity.Position.Y;
-        newPosition.x += currentX;
-        newPosition.y += currentY;
+        int newPositionX = newPoint.X;
+        int newPositionY = newPoint.Y;
+        newPositionX += currentX;
+        newPositionY += currentY;
 
-        if (!IsPositionInside(newPosition.x, newPosition.y))
+        if (!IsPositionInside(newPositionX, newPositionY))
         {
             Console.WriteLine("Position is out of bounds!");
             return;
         }
 
-        if (GetTile(newPosition.x, newPosition.y) == null)
+        if (GetTile(newPositionX, newPositionY) == null)
         {
             Console.WriteLine("No tile found!");
             return;
         }
         
-        if (GetEntity(newPosition.x, newPosition.y) != null)
+        if (GetEntity(newPositionX, newPositionY) != null)
         {
-            Entity idleEntity = GetEntity(newPosition.x, newPosition.y);
+            Entity idleEntity = GetEntity(newPositionX, newPositionY);
             idleEntity.TakeDamage(entity);
             entity.TakeDamage(idleEntity);
             
         }
         
-        WorldMap[newPosition.x, newPosition.y].Entity = WorldMap[currentX, currentY].Entity;
-        Point newPositionPoint = new Point(newPosition.x, newPosition.y);
-        WorldMap[newPosition.x, newPosition.y].Entity.PositionUpdate(newPositionPoint);
+        WorldMap[newPositionX, newPositionY].Entity = WorldMap[currentX, currentY].Entity;
+        Point newPositionPoint = new Point(newPositionX, newPositionY);
+        WorldMap[newPositionX, newPositionY].Entity.PositionUpdate(newPositionPoint);
         WorldMap[currentX, currentY].Entity = null;
     }
 

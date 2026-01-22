@@ -24,7 +24,7 @@
             {
                 map.ViewWorldMap();
                 Direction direction = player.GetEntityInput();
-                (int dx, int dy) offset = player.OffsetDirectionMapper(direction);
+                Point offset = player.OffsetDirectionMapper(direction);
                 map.TryPositionUpdate(offset, player);
                
             }

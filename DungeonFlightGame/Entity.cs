@@ -73,15 +73,15 @@ public class Entity
         }
     }
 
-    public (int dx, int dy) OffsetDirectionMapper(Direction direction)
+    public Point OffsetDirectionMapper(Direction direction)
     {
-        var entityOffset = direction switch
+        Point entityOffset = direction switch
         {
-            Direction.Up => (-1, 0),
-            Direction.Down => (1, 0),
-            Direction.Left => (0, -1),
-            Direction.Right => (0, 1),
-            _ => (0, 0)
+            Direction.Up => new Point(-1, 0),
+            Direction.Down => new Point (1, 0),
+            Direction.Left => new Point (0, -1),
+            Direction.Right => new Point (0, 1),
+            _ => new Point (0, 0)
         };
         return entityOffset;
     }
